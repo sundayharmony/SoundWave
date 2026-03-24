@@ -998,7 +998,7 @@ document.getElementById('intakeForm').addEventListener('submit', async function(
                                             const origText = btn ? btn.innerHTML : '';
                                                 if (btn) { btn.disabled = true; btn.innerHTML = 'Submitting...'; }
 
-                                                    const g = id => (document.getElementById(id) || {}).value || '';
+                                                    const g = id => (form.elements[id] || {}).value || '';
                                                         const data = {
                                                               firstName: g('firstName'), lastName: g('lastName'),
                                                                     stageName: g('stageName'), groupName: g('groupName'),
@@ -1009,12 +1009,12 @@ document.getElementById('intakeForm').addEventListener('submit', async function(
                                                                                                   followers: g('followers'), genre: g('genre'),
                                                                                                         genreTags: g('genreTags'), experience: g('experience'),
                                                                                                               perfStyle: g('perfStyle'), instruments: g('instruments'),
-                                                                                                                    bio: g('bioField'), song1: g('song1'), song1Credit: g('song1Credit'),
-                                                                                                                          song2: g('song2'), song2Credit: g('song2Credit'),
-                                                                                                                                song3: g('song3'), song3Credit: g('song3Credit'),
-                                                                                                                                      song4: g('song4'), song4Credit: g('song4Credit'),
+                                                                                                                    bio: g('bio'), song1: g('song1_title'), song1Credit: g('song1_artist'),
+                                                                                                                          song2: g('song2_title'), song2Credit: g('song2_artist'),
+                                                                                                                                song3: g('song3_title'), song3Credit: g('song3_artist'),
+                                                                                                                                      song4: g('song4_title'), song4Credit: g('song4_artist'),
                                                                                                                                             explicit: g('explicit'), heardAbout: g('heardAbout'),
-                                                                                                                                                  recurring: g('recurring'), notes: g('notesField')
+                                                                                                                                                  recurring: g('recurring'), notes: g('notes')
                                                                                                                                                       };
 
                                                                                                                                                           try {
@@ -1035,7 +1035,6 @@ document.getElementById('intakeForm').addEventListener('submit', async function(
                                                                                                                                                                                                                                                               if (btn) { btn.disabled = false; btn.innerHTML = origText; }
                                                                                                                                                                                                                                                                   }
                                                                                                                                                                                                                                                                     });
-})
 </script>
 </body>
 </html>
