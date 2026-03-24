@@ -1,6 +1,1 @@
-{
-      "redirects": [
-          { "source": "/", "destination": "/soundwave_intake.html", "permanent": false }
-            ]
-            }
-}
+{"redirects":[{"source":"/","destination":"/soundwave_intake.html","permanent":false}]}
