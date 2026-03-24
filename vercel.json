@@ -1,0 +1,6 @@
+{
+      "redirects": [
+          { "source": "/", "destination": "/soundwave_intake.html", "permanent": false }
+            ]
+            }
+}
