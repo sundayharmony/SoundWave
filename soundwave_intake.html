@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sound Wave — Artist Intake Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C518;
+    --cyan: #00D4FF;
+    --white: #FFFFFF;
+    --dark: #0A0A0A;
+    --dark2: #111111;
+    --dark3: #1A1A1A;
+    --dark4: #222222;
+    --muted: #555555;
+    --border: #2a2a2a;
+    --text-muted: #888888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 10% 0%, rgba(0,212,255,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 90% 100%, rgba(245,197,24,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Sound wave lines decoration */
+  .wave-lines {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--gold), var(--cyan), transparent);
+    z-index: 10;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 56px 0 40px;
+    position: relative;
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .logo-mark::before, .logo-mark::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+  .logo-mark::before { width: 80px; height: 80px; }
+  .logo-mark::after { width: 96px; height: 96px; }
+
+  .logo-sw {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 8vw, 72px);
+    letter-spacing: 6px;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .header-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .header-divider span { height: 1px; width: 60px; background: var(--gold); display: block; }
+  .header-divider p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .event-info-bar {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--cyan);
+    padding: 14px 24px;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 48px;
+  }
+
+  .event-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .event-pill strong { color: var(--white); }
+  .event-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
+
+  /* Section */
+  .section {
+    margin-bottom: 36px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.2s; }
+  .section:nth-child(3) { animation-delay: 0.3s; }
+  .section:nth-child(4) { animation-delay: 0.4s; }
+  .section:nth-child(5) { animation-delay: 0.5s; }
+  .section:nth-child(6) { animation-delay: 0.6s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .section-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    padding: 3px 8px;
+    border-radius: 3px;
+    min-width: 28px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* Form Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 540px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  label .req { color: var(--gold); margin-left: 2px; }
+  label .hint { color: var(--muted); font-size: 10px; letter-spacing: 1px; margin-left: 4px; text-transform: none; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  select,
+  textarea {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder { color: var(--muted); font-size: 13px; }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--cyan);
+    background: var(--dark4);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.06);
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  select option { background: #1A1A1A; color: var(--white); }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  /* Song rows */
+  .songs-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .song-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    transition: border-color 0.2s;
+  }
+
+  .song-row:focus-within { border-color: rgba(245,197,24,0.3); }
+
+  .song-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    color: var(--gold);
+    text-align: center;
+  }
+
+  .song-row input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    padding: 6px 2px;
+    font-size: 13px;
+  }
+
+  .song-row input:focus {
+    border-bottom-color: var(--gold);
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .song-dur {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  /* Radio / Checkbox group */
+  .check-group, .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .check-item, .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 8px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .check-item:hover, .radio-item:hover {
+    border-color: var(--cyan);
+    color: var(--white);
+  }
+
+  .check-item input, .radio-item input { display: none; }
+
+  .check-item.active, .radio-item.active {
+    background: rgba(0,212,255,0.08);
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  .check-item .box {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--muted);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .check-item.active .box {
+    background: var(--cyan);
+    border-color: var(--cyan);
+  }
+  .check-item.active .box::after {
+    content: '✓';
+    font-size: 9px;
+    color: #000;
+    font-weight: 900;
+  }
+
+  .radio-item .dot {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--muted);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .radio-item.active .dot {
+    border-color: var(--cyan);
+  }
+  .radio-item.active .dot::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+  }
+
+  /* Character counter */
+  .field-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .char-count {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  /* Requirements note */
+  .note-box {
+    background: rgba(245,197,24,0.05);
+    border: 1px solid rgba(245,197,24,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 5px 5px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.6;
+  }
+  .note-box strong { color: var(--gold); }
+
+  /* Submit zone */
+  .submit-zone {
+    margin-top: 48px;
+    text-align: center;
+    animation: fadeUp 0.5s ease 0.7s both;
+  }
+
+  .agree-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 28px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .agree-row input { display: none; }
+
+  .agree-box {
+    width: 18px; height: 18px; min-width: 18px;
+    border: 1.5px solid var(--muted);
+    border-radius: 4px;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .agree-row.active .agree-box {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .agree-row.active .agree-box::after {
+    content: '✓';
+    font-size: 11px;
+    color: #000;
+    font-weight: 900;
+  }
+
+  .agree-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .agree-text strong { color: var(--white); }
+
+  .submit-btn {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 16px 64px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.15);
+    transition: left 0.3s;
+  }
+
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,197,24,0.35); }
+  .submit-btn:hover::before { left: 100%; }
+  .submit-btn:active { transform: translateY(0); }
+
+  .submit-note {
+    margin-top: 16px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+  }
+
+  /* Success state */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .success-overlay.show { display: flex; }
+
+  .success-box {
+    max-width: 440px;
+  }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 24px;
+    animation: popIn 0.4s ease;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .success-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .success-box p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .success-box p strong { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wave-lines"></div>
+
+<div class="container">
+  <header>
+    <div class="logo-mark"><span class="logo-sw">SW</span></div>
+    <h1>Sound Wave</h1>
+    <h2>Open Mic Music Event — Artist Registration</h2>
+    <div class="header-divider">
+      <span></span>
+      <p>Every Sunday · 4PM–7PM · 21+</p>
+      <span></span>
+    </div>
+    <div class="event-info-bar">
+      <div class="event-pill"><span class="dot"></span><strong>10 Min</strong>&nbsp;Per Artist</div>
+      <div class="event-pill"><span class="dot"></span><strong>4 Songs</strong>&nbsp;Max</div>
+      <div class="event-pill"><span class="dot"></span>All Genres</div>
+      <div class="event-pill"><span class="dot"></span>Free Entry</div>
+    </div>
+  </header>
+
+  <form id="intakeForm" novalidate>
+
+    <!-- SECTION 1 — Artist Identity -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <span class="section-title">Artist Identity</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" name="firstName" placeholder="First" required>
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" name="lastName" placeholder="Last" required>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Stage Name / Artist Name <span class="req">*</span></label>
+          <input type="text" name="stageName" placeholder="How you'll be announced" required>
+        </div>
+        <div class="field">
+          <label>Group / Band Name <span class="hint">(if applicable)</span></label>
+          <input type="text" name="groupName" placeholder="Leave blank if solo">
+        </div>
+      </div>
+      <div class="field">
+        <label>Artist Type <span class="req">*</span></label>
+        <div class="radio-group" id="artistTypeGroup">
+          <label class="radio-item"><input type="radio" name="artistType" value="Solo Artist"> <span class="dot"></span> Solo Artist</label>
+          <label class="radio-item"><input type="radio" name="artistType" value="Band"> <span class="dot"></span> Band</label>
+          <label class="radio-item"><input type="radio" name="artistType" value="DJ"> <span class="dot"></span> DJ</label>
+          <label class="radio-item"><input type="radio" name="artistType" value="Poet / Spoken Word"> <span class="dot"></span> Poet / Spoken Word</label>
+          <label class="radio-item"><input type="radio" name="artistType" value="Duo"> <span class="dot"></span> Duo</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 — Contact -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <span class="section-title">Contact Info</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" name="email" placeholder="you@email.com" required>
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" name="phone" placeholder="(555) 000-0000" required>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>City / Location</label>
+          <input type="text" name="city" placeholder="Where are you based?">
+        </div>
+        <div class="field">
+          <label>Age <span class="req">*</span> <span class="hint">(must be 21+)</span></label>
+          <input type="number" name="age" placeholder="Your age" min="21" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 — Social & Online Presence -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <span class="section-title">Online Presence</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Instagram Handle</label>
+          <input type="text" name="instagram" placeholder="@yourhandle">
+        </div>
+        <div class="field">
+          <label>TikTok Handle</label>
+          <input type="text" name="tiktok" placeholder="@yourhandle">
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>SoundCloud / Spotify / Apple Music</label>
+          <input type="url" name="streamLink" placeholder="Paste profile link">
+        </div>
+        <div class="field">
+          <label>YouTube / Website</label>
+          <input type="url" name="website" placeholder="Paste link">
+        </div>
+      </div>
+      <div class="field">
+        <label>How many followers do you have? <span class="hint">(combined est.)</span></label>
+        <div class="radio-group" id="followersGroup">
+          <label class="radio-item"><input type="radio" name="followers" value="Under 500"> <span class="dot"></span> Under 500</label>
+          <label class="radio-item"><input type="radio" name="followers" value="500–2K"> <span class="dot"></span> 500–2K</label>
+          <label class="radio-item"><input type="radio" name="followers" value="2K–10K"> <span class="dot"></span> 2K–10K</label>
+          <label class="radio-item"><input type="radio" name="followers" value="10K+"> <span class="dot"></span> 10K+</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4 — Music & Performance -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <span class="section-title">Music & Performance</span>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Primary Genre <span class="req">*</span></label>
+        <select name="genre" required>
+          <option value="" disabled selected>Select your primary genre</option>
+          <option>R&B / Soul</option>
+          <option>Hip-Hop / Rap</option>
+          <option>Pop</option>
+          <option>Jazz</option>
+          <option>Neo-Soul</option>
+          <option>Gospel / Worship</option>
+          <option>Afrobeats</option>
+          <option>Reggae / Dancehall</option>
+          <option>Rock / Alternative</option>
+          <option>Electronic / House</option>
+          <option>Country / Folk</option>
+          <option>Classical / Instrumental</option>
+          <option>Spoken Word / Poetry</option>
+          <option>Latin</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Additional Genres <span class="hint">(select all that apply)</span></label>
+        <div class="check-group" id="genreTagsGroup">
+          <label class="check-item"><input type="checkbox" name="genreTags" value="R&B / Soul"><span class="box"></span>R&B / Soul</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Hip-Hop"><span class="box"></span>Hip-Hop</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Pop"><span class="box"></span>Pop</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Jazz"><span class="box"></span>Jazz</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Neo-Soul"><span class="box"></span>Neo-Soul</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Gospel"><span class="box"></span>Gospel</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Afrobeats"><span class="box"></span>Afrobeats</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Rock"><span class="box"></span>Rock</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Electronic"><span class="box"></span>Electronic</label>
+          <label class="check-item"><input type="checkbox" name="genreTags" value="Spoken Word"><span class="box"></span>Spoken Word</label>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Experience Level <span class="req">*</span></label>
+          <select name="experience" required>
+            <option value="" disabled selected>Select level</option>
+            <option>Beginner (first few shows)</option>
+            <option>Developing (some stage time)</option>
+            <option>Intermediate (regular performer)</option>
+            <option>Advanced (professional/touring)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Performance Style <span class="req">*</span></label>
+          <select name="perfStyle" required>
+            <option value="" disabled selected>Select style</option>
+            <option>Live instrument(s)</option>
+            <option>Vocals over backing track</option>
+            <option>Acapella</option>
+            <option>DJ set</option>
+            <option>Spoken word / Poetry</option>
+            <option>Mixed (live + track)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Instruments You'll Play <span class="hint">(check all that apply)</span></label>
+        <div class="check-group" id="instrumentsGroup">
+          <label class="check-item"><input type="checkbox" name="instruments" value="Guitar"><span class="box"></span>Guitar</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Bass"><span class="box"></span>Bass</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Drums / Percussion"><span class="box"></span>Drums</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Keys / Piano"><span class="box"></span>Keys / Piano</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Violin"><span class="box"></span>Violin</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Saxophone"><span class="box"></span>Saxophone</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Trumpet"><span class="box"></span>Trumpet</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="DJ Equipment"><span class="box"></span>DJ Equipment</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Vocals Only"><span class="box"></span>Vocals Only</label>
+          <label class="check-item"><input type="checkbox" name="instruments" value="Other"><span class="box"></span>Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Short Artist Bio <span class="req">*</span> <span class="hint">(used for intro / program)</span></label>
+        <textarea name="bio" id="bioField" placeholder="Tell us who you are as an artist in 2–3 sentences. This may be read aloud when you're introduced." maxlength="300"></textarea>
+        <div class="field-footer"><span class="char-count" id="bioCount">0 / 300</span></div>
+      </div>
+    </div>
+
+    <!-- SECTION 5 — Set List -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <span class="section-title">Your Set List</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="note-box" style="margin-bottom:16px">
+        <strong>10-Minute Slot:</strong> You have up to 4 songs. Plan your set carefully — the clock starts when you hit the stage. Include original titles and/or covers below.
+      </div>
+      <div class="songs-block">
+        <div class="song-row">
+          <span class="song-num">1</span>
+          <input type="text" name="song1_title" placeholder="Song title">
+          <input type="text" name="song1_artist" placeholder="Original / Cover of…">
+          <span class="song-dur">≈2–3 min</span>
+        </div>
+        <div class="song-row">
+          <span class="song-num">2</span>
+          <input type="text" name="song2_title" placeholder="Song title">
+          <input type="text" name="song2_artist" placeholder="Original / Cover of…">
+          <span class="song-dur">≈2–3 min</span>
+        </div>
+        <div class="song-row">
+          <span class="song-num">3</span>
+          <input type="text" name="song3_title" placeholder="Song title (optional)">
+          <input type="text" name="song3_artist" placeholder="Original / Cover of…">
+          <span class="song-dur">optional</span>
+        </div>
+        <div class="song-row">
+          <span class="song-num">4</span>
+          <input type="text" name="song4_title" placeholder="Song title (optional)">
+          <input type="text" name="song4_artist" placeholder="Original / Cover of…">
+          <span class="song-dur">optional</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:16px">
+        <label>Explicit Content? <span class="req">*</span></label>
+        <div class="radio-group" id="explicitGroup">
+          <label class="radio-item"><input type="radio" name="explicit" value="No explicit content"> <span class="dot"></span> No explicit content</label>
+          <label class="radio-item"><input type="radio" name="explicit" value="Mild language"> <span class="dot"></span> Mild language</label>
+          <label class="radio-item"><input type="radio" name="explicit" value="Explicit — will notify crowd"> <span class="dot"></span> Explicit (will notify crowd)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6 — Tech Rider & Logistics -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">06</span>
+        <span class="section-title">Tech Rider & Logistics</span>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>What do you need from the house? <span class="hint">(select all)</span></label>
+        <div class="check-group" id="techGroup">
+          <label class="check-item"><input type="checkbox" name="tech" value="Microphone"><span class="box"></span>Mic</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Mic Stand"><span class="box"></span>Mic Stand</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Monitor (stage speaker)"><span class="box"></span>Monitor</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="DI Box"><span class="box"></span>DI Box</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Guitar Amp"><span class="box"></span>Guitar Amp</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Keyboard / Stand"><span class="box"></span>Keyboard / Stand</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Drum Kit"><span class="box"></span>Drum Kit</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Aux / 3.5mm Input"><span class="box"></span>Aux Input</label>
+          <label class="check-item"><input type="checkbox" name="tech" value="Nothing — self contained"><span class="box"></span>Nothing – Self Contained</label>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Backing Track Format <span class="hint">(if applicable)</span></label>
+        <div class="radio-group" id="trackFormatGroup">
+          <label class="radio-item"><input type="radio" name="trackFormat" value="No backing track"> <span class="dot"></span> No backing track</label>
+          <label class="radio-item"><input type="radio" name="trackFormat" value="Phone / Aux"> <span class="dot"></span> Phone / Aux</label>
+          <label class="radio-item"><input type="radio" name="trackFormat" value="Laptop"> <span class="dot"></span> Laptop</label>
+          <label class="radio-item"><input type="radio" name="trackFormat" value="USB / Thumb Drive"> <span class="dot"></span> USB Drive</label>
+          <label class="radio-item"><input type="radio" name="trackFormat" value="DJ Controller"> <span class="dot"></span> DJ Controller</label>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Number of performers in your group</label>
+          <input type="number" name="groupSize" placeholder="1" min="1" max="20">
+        </div>
+        <div class="field">
+          <label>Preferred slot time <span class="hint">(not guaranteed)</span></label>
+          <select name="slotPref">
+            <option value="" disabled selected>No preference</option>
+            <option>Early (4PM–5PM)</option>
+            <option>Middle (5PM–6PM)</option>
+            <option>Late (6PM–7PM)</option>
+            <option>No preference</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Additional tech notes or special requests</label>
+        <textarea name="techNotes" placeholder="Anything the sound engineer should know — tuning needs, custom setups, accessibility accommodations, etc." style="min-height:80px"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 7 — Final Notes -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">07</span>
+        <span class="section-title">Anything Else?</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="field" style="margin-bottom:16px">
+        <label>How did you hear about Sound Wave?</label>
+        <div class="check-group" id="hearAboutGroup">
+          <label class="check-item"><input type="checkbox" name="hearAbout" value="Instagram"><span class="box"></span>Instagram</label>
+          <label class="check-item"><input type="checkbox" name="hearAbout" value="TikTok"><span class="box"></span>TikTok</label>
+          <label class="check-item"><input type="checkbox" name="hearAbout" value="Friend / Word of mouth"><span class="box"></span>Word of Mouth</label>
+          <label class="check-item"><input type="checkbox" name="hearAbout" value="Flyer"><span class="box"></span>Flyer</label>
+          <label class="check-item"><input type="checkbox" name="hearAbout" value="I've attended before"><span class="box"></span>Attended Before</label>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:16px">
+        <label>Are you interested in being a recurring artist?</label>
+        <div class="radio-group" id="recurringGroup">
+          <label class="radio-item"><input type="radio" name="recurring" value="Yes — I'd love to be a regular"> <span class="dot"></span> Yes, regularly</label>
+          <label class="radio-item"><input type="radio" name="recurring" value="Maybe — one time first"> <span class="dot"></span> Maybe, one time first</label>
+          <label class="radio-item"><input type="radio" name="recurring" value="Just this one event"> <span class="dot"></span> Just this event</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Anything else you want us to know?</label>
+        <textarea name="notes" id="notesField" placeholder="Share any extra context — collaborations, dedications, shoutouts, etc." maxlength="400" style="min-height:80px"></textarea>
+        <div class="field-footer"><span class="char-count" id="notesCount">0 / 400</span></div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-zone">
+      <label class="agree-row" id="agreeRow">
+        <input type="checkbox" id="agreeCheck">
+        <span class="agree-box"></span>
+        <span class="agree-text"><strong>I confirm I am 21 or older</strong> and agree to respect the 10-minute set limit. I understand that Sound Wave reserves the right to adjust the running order as needed for programming purposes.</span>
+      </label>
+      <button type="submit" class="submit-btn">Submit Registration</button>
+      <p class="submit-note">Confirmation will be sent to your email · @LibertyArtsDistrict</p>
+    </div>
+  </form>
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">🎤</div>
+    <h3>You're In!</h3>
+    <p>Your registration has been received. We'll be in touch with your slot details shortly.</p>
+    <p><strong>See you Sunday, 4PM–7PM.</strong></p>
+    <p style="margin-top:16px; font-size:12px; letter-spacing:2px; font-family:'Barlow Condensed',sans-serif; color:#555; text-transform:uppercase;">@LibertyArtsDistrict · 21+</p>
+  </div>
+</div>
+
+<script>
+  // Radio / Checkbox toggle styling
+  document.querySelectorAll('.radio-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const name = item.querySelector('input').name;
+      document.querySelectorAll(`.radio-item input[name="${name}"]`).forEach(inp => {
+        inp.closest('.radio-item').classList.remove('active');
+      });
+      item.querySelector('input').checked = true;
+      item.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.check-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const inp = item.querySelector('input');
+      inp.checked = !inp.checked;
+      item.classList.toggle('active', inp.checked);
+    });
+  });
+
+  // Agree row
+  const agreeRow = document.getElementById('agreeRow');
+  const agreeCheck = document.getElementById('agreeCheck');
+  agreeRow.addEventListener('click', () => {
+    agreeCheck.checked = !agreeCheck.checked;
+    agreeRow.classList.toggle('active', agreeCheck.checked);
+  });
+
+  // Char counters
+  document.getElementById('bioField').addEventListener('input', function() {
+    document.getElementById('bioCount').textContent = this.value.length + ' / 300';
+  });
+  document.getElementById('notesField').addEventListener('input', function() {
+    document.getElementById('notesCount').textContent = this.value.length + ' / 400';
+  });
+
+  // Form submit
+  document.getElementById('intakeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!agreeCheck.checked) {
+      agreeRow.style.borderColor = 'rgba(245,197,24,0.6)';
+      agreeRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    document.getElementById('successOverlay').classList.add('show');
+  });
+</script>
+</body>
+</html>
