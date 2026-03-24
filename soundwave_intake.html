@@ -985,15 +985,57 @@
   });
 
   // Form submit
-  document.getElementById('intakeForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (!agreeCheck.checked) {
-      agreeRow.style.borderColor = 'rgba(245,197,24,0.6)';
-      agreeRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    document.getElementById('successOverlay').classList.add('show');
-  });
+document.getElementById('intakeForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+          if (!agreeCheck.checked) {
+                agreeRow.style.borderColor = 'rgba(245,197,24,0.6)';
+                      agreeRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            return;
+                                }
+
+                                    const form = e.target;
+                                        const btn = form.querySelector('button[type="submit"]');
+                                            const origText = btn ? btn.innerHTML : '';
+                                                if (btn) { btn.disabled = true; btn.innerHTML = 'Submitting...'; }
+
+                                                    const g = id => (document.getElementById(id) || {}).value || '';
+                                                        const data = {
+                                                              firstName: g('firstName'), lastName: g('lastName'),
+                                                                    stageName: g('stageName'), groupName: g('groupName'),
+                                                                          artistType: g('artistType'), email: g('email'),
+                                                                                phone: g('phone'), city: g('city'), age: g('age'),
+                                                                                      instagram: g('instagram'), tiktok: g('tiktok'),
+                                                                                            streamLink: g('streamLink'), website: g('website'),
+                                                                                                  followers: g('followers'), genre: g('genre'),
+                                                                                                        genreTags: g('genreTags'), experience: g('experience'),
+                                                                                                              perfStyle: g('perfStyle'), instruments: g('instruments'),
+                                                                                                                    bio: g('bioField'), song1: g('song1'), song1Credit: g('song1Credit'),
+                                                                                                                          song2: g('song2'), song2Credit: g('song2Credit'),
+                                                                                                                                song3: g('song3'), song3Credit: g('song3Credit'),
+                                                                                                                                      song4: g('song4'), song4Credit: g('song4Credit'),
+                                                                                                                                            explicit: g('explicit'), heardAbout: g('heardAbout'),
+                                                                                                                                                  recurring: g('recurring'), notes: g('notesField')
+                                                                                                                                                      };
+
+                                                                                                                                                          try {
+                                                                                                                                                                const res = await fetch('/api/submit', {
+                                                                                                                                                                        method: 'POST',
+                                                                                                                                                                                headers: { 'Content-Type': 'application/json' },
+                                                                                                                                                                                        body: JSON.stringify(data)
+                                                                                                                                                                                              });
+                                                                                                                                                                                                    const result = await res.json();
+                                                                                                                                                                                                          if (result.success) {
+                                                                                                                                                                                                                  document.getElementById('successOverlay').classList.add('show');
+                                                                                                                                                                                                                        } else {
+                                                                                                                                                                                                                                alert('Submission error: ' + (result.error || 'Unknown error'));
+                                                                                                                                                                                                                                        if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                                  } catch(err) {
+                                                                                                                                                                                                                                                        alert('Network error. Please try again.');
+                                                                                                                                                                                                                                                              if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+                                                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                                                    });
+})
 </script>
 </body>
 </html>
